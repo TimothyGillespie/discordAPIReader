@@ -1,3 +1,3 @@
 import apiFunctions as api
 
-print("hallo")
+getChannels("639955744350797825")

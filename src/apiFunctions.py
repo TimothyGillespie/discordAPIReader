@@ -1,17 +1,43 @@
 import os
 import requests
+import discord
 
-apiKey = os.environ["TONISAPIKEY"]
-token_type = "bot" # is this correct?
+#apiKey = os.environ["TONISAPIKEY"]
+oAuth = ""
 
 def getChannels(serverID):
-    apiAddress = "https://discordapp.com/api/v6/guilds/%s".format(serverID)
+    apiAddress = "https://discordapp.com/api/v6/guilds/"+serverID
+    print(apiAddress)
 
-    header = {"Authorization": "%s %s".format(token_type, apiKey)}
+    header = {
+        "Authorization": oAuth,
+        "Content-Type": "application/json",
+    }
 
-    r = requests.post(apiAddress, data = header)
+    print(oAuth)
+    r = requests.get(apiAddress, headers = header)
 
     server = r.json()
-    channels = server.channels
+    channels = server
 
     return channels
+
+def sayHello(channelID, message):
+    apiAddress = "https://discordapp.com/api/v6/channels/" + str(channelID) + "/messages"
+    print(apiAddress)
+
+    header = {
+        "Authorization": oAuth,
+        "Content-Type": "application/json"
+    }
+
+    body = {"content" : message}
+
+    r = requests.post(apiAddress, json = body, headers = header)
+
+
+    return r
+
+
+if __name__ == "__main__":
+    print("weitermachen")
